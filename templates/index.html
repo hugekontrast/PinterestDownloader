@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Download pinterest posts.</title>
+	<style type="text/css">
+		html,body{
+			width:100%;
+			height: 100%;
+			background: var(--bg);
+			color: var(--fore);
+		}
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: monospace,sans-serif;
+			background: var(--bg);
+			color: var(--fore);
+		}
+		button{
+			width: 100px;
+			height: 40px;
+			cursor: pointer;
+			border: none;
+			border-radius: 0;
+			background: #1da1f2;
+			color: white;
+		}
+		.flex-ccenter , .flex-rcenter{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-around;
+			text-align: center;
+		}
+		.flex-rcenter{
+			flex-direction: row;
+		}
+		.margin-auto{
+			margin: auto;
+		}
+		#main{
+			width: 100%;
+			height: 100%;
+			text-align: center;
+		}
+		#main > div{
+			transform: translateY(-20%);
+		}
+		#main > div >div{
+			width: 100%;
+			padding: 1em;
+		}
+		input{
+			width: 100%;
+			height: 40px;
+			padding: 10px;
+			margin: 10px;
+			border:2px solid #000;
+		}
+		button{
+			height: 40px;
+			margin: 10px;
+			background: #e60023;
+			font-size: 1.2em;
+			border-radius: 2px;
+		}
+		#reception{
+			height: 100%;
+			margin: auto;
+		}
+		#downloadLink{
+			width: 100px;
+			height: 60px;
+			background: #e60023;
+			color: white;
+			text-align: center;
+			border-radius: 2px;
+		}
+		#downloadLink > a{
+			line-height: 60px;
+		}
+		img,video{
+			width: 300px;
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+	<div id="main" class="flex-ccenter">
+		<div class="flex-ccenter">
+			<div>
+				<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="#000" stroke-linecap="round" stroke-linejoin="round"><path d="M12 0a12 12 0 0 0-4.82 23c-.03-.85 0-1.85.21-2.76l1.55-6.54s-.39-.77-.39-1.9c0-1.78 1.03-3.1 2.32-3.1 1.09 0 1.62.81 1.62 1.8 0 1.09-.7 2.73-1.06 4.25-.3 1.27.63 2.31 1.89 2.31 2.27 0 3.8-2.92 3.8-6.38 0-2.63-1.77-4.6-4.99-4.6a5.68 5.68 0 0 0-5.9 5.75c0 1.05.3 1.78.78 2.35.23.27.26.37.18.67l-.25.97c-.08.3-.32.4-.6.3-1.67-.69-2.46-2.52-2.46-4.59 0-3.4 2.88-7.5 8.58-7.5 4.58 0 7.6 3.32 7.6 6.88 0 4.7-2.62 8.22-6.48 8.22-1.3 0-2.51-.7-2.93-1.5l-.84 3.3c-.26.93-.76 1.86-1.21 2.58A11.99 11.99 0 0 0 24 12 12 12 0 0 0 12 0z"/></svg>
+			</div>
+			<div>
+				<form class="flex-rcenter" style="flex-wrap: wrap;">
+					<input type="url" name="link" placeholder="Type or paste in the url.">
+					<button type="submit">Go</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	{% if reception != null %}
+	<div id="reception" class="felx-rcenter">
+		<div class="flex-rcenter"  style="flex-wrap: wrap;">
+			<div id="pin">
+
+				{% if reception['postType'] == 'image' %}
+				<img src="{{ reception.src }}">
+
+				{% else %}
+				<video controls autoplay="autoplay">
+					<source src="{{ reception.src }}"
+					type="video/mp4">
+					Sorry, your browser doesn't support embedded videos.
+				</video>
+				{% endif %}
+
+			</div>
+			<div  id="downloadLink">
+				<a href="{{ reception.src }}" download="file">
+					Download
+				</a>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	<script type="text/javascript">
+		function get(element) {
+			const ele = document.querySelectorAll(element);
+			if(ele.length == 1)
+				return ele[0];
+			return ele;
+		}
+	</script>
+</body>
+</html>
